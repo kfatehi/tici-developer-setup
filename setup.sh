@@ -16,19 +16,19 @@ git config --global user.name "Keyvan Fatehi"
 
 # Pip stuff
 mkdir -p /data/media/developer/pip/tmp
-mkdir -p /data/media/developer/pip/target
 mkdir -p /data/media/developer/pip/cache
 cat <<EOF > /data/media/developer/pip/env
 export TMPDIR=/data/media/developer/pip/tmp
-export PIP_TARGET=/data/media/developer/pip/target
+export PIP_TARGET=/data/openpilot/pyextra
 export PIP_CACHE_DIR=/data/media/developer/pip/cache
-export PYTHONPATH="\$PIP_TARGET:\$PYTHONPATH"
 EOF
 echo "If you want to install stuff with pip run:"
-echo "   sudo mount -o remount,rw /"
 echo "   . /data/media/developer/pip/env"
+echo ""
+echo "If you need to write to root for some reason run:"
+echo "   sudo mount -o remount,rw /"
 
 # Streamer requirements
 # sudo apt update
 # sudo apt install -y libopus-dev libvpx-dev
-# pip install av aiortc
+# pip install av aiortc aiohttp websockets
