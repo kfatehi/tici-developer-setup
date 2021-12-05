@@ -30,5 +30,5 @@ echo "   . /data/media/developer/pip/env"
 
 # Streamer requirements
 # sudo apt update
-# sudo apt install -y libopus-dev
+# sudo apt install -y libopus-dev libvpx-dev
 # pip install av aiortc
