@@ -1,9 +1,23 @@
 #!/bin/bash
+
+# Dotfiles
+if [[ ! -L /home/comma/.kfc ]]; then
+  if [[ -d /home/comma/.kfc ]]; then
+    rm -rf /home/comma/.kfc
+  fi
+  if [[ ! -d /data/media/developer/.kfc ]]; then
+    git clone https://github.com/kfatehi/dotconf /data/media/developer/.kfc
+    cd /data/media/developer/.kfc && ./bootstrap
+  fi
+  ln -sf /data/media/developer/.kfc /home/comma/.kfc
+fi
+
 # VScode
 if [[ ! -L /home/comma/.vscode-server ]]; then
   if [[ -d /home/comma/.vscode-server ]]; then
     rm -rf /home/comma/.vscode-server
   fi
+  mkdir -p /data/media/developer/vscode-server
   ln -sf /data/media/developer/vscode-server /home/comma/.vscode-server
 fi
 
@@ -22,6 +36,7 @@ export TMPDIR=/data/media/developer/pip/tmp
 export PIP_TARGET=/data/openpilot/pyextra
 export PIP_CACHE_DIR=/data/media/developer/pip/cache
 EOF
+
 echo "If you want to install stuff with pip run:"
 echo "   . /data/media/developer/pip/env"
 echo ""
