@@ -37,11 +37,14 @@ export PIP_TARGET=/data/openpilot/pyextra
 export PIP_CACHE_DIR=/data/media/developer/pip/cache
 EOF
 
-echo "If you want to install stuff with pip run:"
+echo "If you want to install stuff persistently with pip you can first run:"
 echo "   . /data/media/developer/pip/env"
 echo ""
-echo "If you need to write to root for some reason run:"
+echo "If you need to write to root for some reason you can run:"
 echo "   sudo mount -o remount,rw /"
+echo ""
+echo "Put it back like so after making your changes:"
+echo "   sudo mount -o remount,ro /"
 
 # Streamer requirements
 # sudo apt update
