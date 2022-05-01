@@ -7,9 +7,19 @@ if [[ ! -L /home/comma/.kfc ]]; then
   fi
   if [[ ! -d /data/media/developer/.kfc ]]; then
     git clone https://github.com/kfatehi/dotconf /data/media/developer/.kfc
-    cd /data/media/developer/.kfc && ./bootstrap
+    ln -sf /data/media/developer/.kfc /home/comma/.kfc
+    cd /home/comma/.kfc && ./bootstrap
   fi
-  ln -sf /data/media/developer/.kfc /home/comma/.kfc
+else
+  arr=(vim vimrc tmux.conf)
+  for i in "${arr[@]}"; do
+    if [[ ! -L /home/comma/.$i ]]; then
+      if [[ -f /home/comma/.$i || -d /home/comma/.$1 ]]; then
+        mv /home/comma/.$i /home/comma/.$i.backup
+      fi
+      ln -sf /data/media/developer/.kfc/dotfiles/$i /home/comma/.$i
+    fi
+  done
 fi
 
 # VScode
