@@ -10,7 +10,9 @@ if [[ ! -L /home/comma/.kfc ]]; then
     ln -sf /data/media/developer/.kfc /home/comma/.kfc
     cd /home/comma/.kfc && ./bootstrap
   fi
-else
+  ln -sf /data/media/developer/.kfc /home/comma/.kfc
+  mkdir -p /data/media/developer/.vim-plugs
+  ln -sf /data/media/developer/.vim-plugs /home/comma/.vim-plugs
   arr=(vim vimrc tmux.conf)
   for i in "${arr[@]}"; do
     if [[ ! -L /home/comma/.$i ]]; then
@@ -20,6 +22,7 @@ else
       ln -sf /data/media/developer/.kfc/dotfiles/$i /home/comma/.$i
     fi
   done
+  #vim +PlugInstall +exit +exit
 fi
 
 # VScode
@@ -60,3 +63,6 @@ echo "   sudo mount -o remount,ro /"
 # sudo apt update
 # sudo apt install -y libopus-dev libvpx-dev
 # pip install av aiortc aiohttp websockets
+
+alias esetup="vim /data/media/developer/setup.sh"
+alias cui="cd /data/openpilot/selfdrive/ui && scons -u -j$(nproc)"
