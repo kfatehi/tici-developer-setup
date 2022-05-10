@@ -1,0 +1,5 @@
+* mobile/PC streaming website you can drive from with keyboard or joystick
+- i created a branch webjoystick_wasd but it needs to be smarter so you can have multiple keys pressed at once
+
+* reach: inside out SLAM tracking, to have the localizer give you absolute position
+- i cant do this but i can hack it with a t265!

@@ -66,3 +66,6 @@ echo "   sudo mount -o remount,ro /"
 
 alias esetup="vim /data/media/developer/setup.sh"
 alias cui="cd /data/openpilot/selfdrive/ui && scons -u -j$(nproc)"
+alias mydev="cd /data/media/developer"
+
+export PATH="$PATH:/data/media/developer/usr/local/bin"

@@ -2,3 +2,7 @@
 /vendor
 /vscode-server
 /.kfc
+/usr
+/tmp
+/src
+/.vim-plugs
