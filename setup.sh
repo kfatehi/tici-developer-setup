@@ -22,7 +22,7 @@ if [[ ! -L /home/comma/.kfc ]]; then
       ln -sf /data/media/developer/.kfc/dotfiles/$i /home/comma/.$i
     fi
   done
-  #vim +PlugInstall +exit +exit
+  vim +PlugInstall +exit +exit
 fi
 
 # VScode
@@ -69,3 +69,17 @@ alias cui="cd /data/openpilot/selfdrive/ui && scons -u -j$(nproc)"
 alias mydev="cd /data/media/developer"
 
 export PATH="$PATH:/data/media/developer/usr/local/bin"
+
+if [[ -d /data/media/developer/golang/go ]]; then
+  if [[ ! -L /home/comma/go ]]; then
+    if [[ -d /home/comma/go ]]; then
+      rm -rf /home/comma/go
+    fi
+    mkdir -p /data/media/developer/golang/go-home
+    ln -sf /data/media/developer/golang/go-home /home/comma/go
+  fi
+  export PATH="$PATH:/data/media/developer/golang/go/bin"
+  echo
+  echo "If building golang projects, set TMPDIR like so:"
+  echo "  TMPDIR=/data/media/developer/golang/cache"
+fi
