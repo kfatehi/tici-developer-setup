@@ -76,10 +76,11 @@ if [[ -d /data/media/developer/golang/go ]]; then
       rm -rf /home/comma/go
     fi
     mkdir -p /data/media/developer/golang/go-home
+    mkdir -p /data/media/developer/golang/cache
     ln -sf /data/media/developer/golang/go-home /home/comma/go
   fi
   export PATH="$PATH:/data/media/developer/golang/go/bin"
-  echo
-  echo "If building golang projects, set TMPDIR like so:"
-  echo "  TMPDIR=/data/media/developer/golang/cache"
+  export PATH="/data/media/developer/golang/go-home/bin:$PATH"
+  export GOTMPDIR="/data/media/developer/golang/cache"
+  mkdir -p $GOTMPDIR
 fi
