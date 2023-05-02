@@ -3,12 +3,22 @@ import requests
 import av
 import io
 import subprocess
+import itertools
 
 SERVER_URL = "http://192.168.70.168:5000/tts"
 
+def chunked_response_reader(response, chunk_size=8192):
+    try:
+        for chunk in response.iter_content(chunk_size):
+            if chunk:
+                yield chunk
+    except requests.exceptions.ChunkedEncodingError:
+        pass
+
+
 def play_audio_stream(response):
     # Open the response as a container
-    container = av.open(io.BytesIO(response.content), mode='r')
+    container = av.open(io.BytesIO(b''.join(chunked_response_reader(response))), mode='r')
 
     # Get the audio stream
     audio_stream = container.streams.audio[0]
@@ -21,10 +31,15 @@ def play_audio_stream(response):
     output_container = av.open(output_buffer, mode='w', format='wav')
     output_stream = output_container.add_stream("pcm_u8", rate=48000)
 
+    # Initialize a variable for the next timestamp
+    next_dts = 0
 
     # Read and decode audio frames
     for frame in container.decode(audio_stream):
+        frame.pts = next_dts
         for packet in output_stream.encode(frame):
+            # Set the packet's timestamp
+            packet.dts = packet.pts
             output_container.mux(packet)
             data = output_buffer.getvalue()
             if data:
@@ -32,19 +47,13 @@ def play_audio_stream(response):
                 output_buffer.seek(0)
                 output_buffer.truncate()
 
-    # Flush any remaining packets
-    for packet in output_stream.encode(None):
-        output_container.mux(packet)
+        # Update the next timestamp
+        next_dts += frame.samples
 
     output_container.close()
-
-    # Yield the remaining chunk
-    data = output_buffer.getvalue()
-    if data:
-        aplay_process.stdin.write(data)
-    
     aplay_process.stdin.close()
     aplay_process.wait()
+
 
 def synthesize_text(text):
     payload = {
