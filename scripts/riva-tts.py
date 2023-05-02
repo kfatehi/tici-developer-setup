@@ -70,10 +70,15 @@ def synthesize_text(text):
     # Stream and play the audio
     play_audio_stream(response)
 
-if __name__ == "__main__":
-    if len(sys.argv) < 2:
-        print(f"Usage: {sys.argv[0]} <text-to-synthesize>")
-        sys.exit(1)
+def main():
+    if len(sys.argv) == 2:
+        text = sys.argv[1]
+        synthesize_text(text)
+    else:
+        for line in sys.stdin:
+            stripped_line = line.strip()
+            if len(stripped_line) > 0:
+                synthesize_text(stripped_line)
 
-    text = sys.argv[1]
-    synthesize_text(text)
+if __name__ == "__main__":
+    main()
